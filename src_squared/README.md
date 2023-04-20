@@ -1,16 +1,61 @@
-# src_squared
+# Source Code Squared
 
-A new Flutter project.
+> Generating source code from source code
 
-## Getting Started
+## Adding `freezed` and `json_serializable`
 
-This project is a starting point for a Flutter application.
+```shell
+flutter pub add freezed_annotation
+flutter pub add --dev build_runner freezed
+flutter pub add json_annotation
+flutter pub add --dev json_serializable
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Adding `flutter_gen`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```shell
+dart pub global activate flutter_gen
+flutter pub add --dev flutter_gen_runner
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Adding assets
+
+*Would have it been easier to just include these assets into the starter branch? Definitely.*
+
+```shell
+mkdir assets
+curl --output assets/logo_flutter.png https://www.ideematic.com/wp-content/uploads/2020/07/flutter_logo.png
+curl --output assets/logo_dart.png https://dwglogo.com/wp-content/uploads/2018/03/Dart_logo.png
+```
+
+### Registering assets in `pubspec.yaml`
+
+Edit your `pubspec.yaml` so that it has this section:
+
+```yaml
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    - assets/
+```
+
+## Adding `Makefile`
+
+```shell
+touch Makefile
+```
+
+Paste this content into the file:
+
+```makefile
+# Generate code for all the packages with dynamic features
+watch:
+	@echo "==> 👀 Watching for changes in packages with dynamic features"
+	@flutter pub run build_runner watch --delete-conflicting-outputs --verbose
+```
+ 
